@@ -1,3 +1,5 @@
+package org.dam.project
+
 import java.io.BufferedReader
 import java.io.InputStreamReader
 

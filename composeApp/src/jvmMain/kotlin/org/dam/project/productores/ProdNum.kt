@@ -1,3 +1,5 @@
+package org.dam.project
+
 import java.io.BufferedWriter
 import java.io.OutputStreamWriter
 import kotlin.random.Random
@@ -13,7 +15,7 @@ fun main(args: Array<String>) {
         // Determinar cantidad de números a generar
         val count = if (args.isNotEmpty()) args[0].toInt() else 10
 
-        println("PRODUCTOR DE NÚMEROS: Iniciando generación de $count números...")
+        println("PRODUCTOR DE NUMEROS: Iniciando generacion de $count numeros...")
 
         repeat(count) { i ->
             val number = Random.nextInt(1, 100)
@@ -22,16 +24,16 @@ fun main(args: Array<String>) {
 
             // Simular trabajo
             Thread.sleep(200)
-            System.err.println("PRODUCTOR DE NÚMEROS: Enviado número $number (${i + 1}/$count)")
+            System.err.println("PRODUCTOR DE NUMEROS: Enviado numero $number (${i + 1}/$count)")
         }
 
         // Señal de finalización
         writer.write("FIN\n")
         writer.flush()
-        System.err.println("PRODUCTOR DE NÚMEROS: Finalizado")
+        System.err.println("PRODUCTOR DE NUMEROS: Finalizado")
 
     } catch (e: Exception) {
-        System.err.println("ERROR en productor de números: ${e.message}")
+        System.err.println("ERROR en productor de numeros: ${e.message}")
         e.printStackTrace(System.err)
     } finally {
         writer.close()

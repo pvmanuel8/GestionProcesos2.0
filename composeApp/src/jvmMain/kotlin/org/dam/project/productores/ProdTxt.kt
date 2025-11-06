@@ -1,3 +1,5 @@
+package org.dam.project
+
 import java.io.BufferedWriter
 import java.io.OutputStreamWriter
 import kotlin.random.Random
@@ -19,7 +21,7 @@ fun main(args: Array<String>) {
         // Determinar cantidad de palabras a generar
         val count = if (args.isNotEmpty()) args[0].toInt() else 10
 
-        println("PRODUCTOR DE PALABRAS: Iniciando generación de $count palabras...")
+        println("PRODUCTOR DE PALABRAS: Iniciando generacion de $count palabras...")
 
         repeat(count) { i ->
             val palabra = palabras.random()
