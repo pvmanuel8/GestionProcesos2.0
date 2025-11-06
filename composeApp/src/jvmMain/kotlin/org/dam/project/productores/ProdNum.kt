@@ -1,33 +1,39 @@
-package org.example
-
-import java.io.IOException
-import java.io.PipedOutputStream
+import java.io.BufferedWriter
+import java.io.OutputStreamWriter
 import kotlin.random.Random
 
+/**
+ * Proceso Productor de Números Aleatorios
+ * Genera números aleatorios y los envía a través del flujo de salida estándar
+ */
+fun main(args: Array<String>) {
+    val writer = BufferedWriter(OutputStreamWriter(System.out))
 
-class ProdNum (private val pipeOut: PipedOutputStream) {
-    // Genera una lista de números aleatorios según la cantidad y el rango indicados
-    fun generarNumerosAleatorios(cantidad: Int, rango: IntRange = 1..100): List<Int> {
-        return List(cantidad) { Random.nextInt(rango.first, rango.last + 1) }
+    try {
+        // Determinar cantidad de números a generar
+        val count = if (args.isNotEmpty()) args[0].toInt() else 10
 
-    }
+        println("PRODUCTOR DE NÚMEROS: Iniciando generación de $count números...")
 
-    fun enviarDatos(input: String){
-        try {
-            println("Ingresa numeros. Escribe una linea vacia para finalizar:")
-            val numeros = mutableListOf<String>()
-            while (true) {
-                val linea = readLine()
-                if (linea == null || linea.isBlank()) { break }
-                numeros.add(linea.trim())
-            }
-            val cadenaParaEnviar = numeros.joinToString(",")
-            pipeOut.write(cadenaParaEnviar.toByteArray())
-            pipeOut.flush()
-            pipeOut.close()
-        }catch (e: IOException){
-            println("Error: ${e.message}")
+        repeat(count) { i ->
+            val number = Random.nextInt(1, 100)
+            writer.write("$number\n")
+            writer.flush()
+
+            // Simular trabajo
+            Thread.sleep(200)
+            System.err.println("PRODUCTOR DE NÚMEROS: Enviado número $number (${i + 1}/$count)")
         }
-    }
 
+        // Señal de finalización
+        writer.write("FIN\n")
+        writer.flush()
+        System.err.println("PRODUCTOR DE NÚMEROS: Finalizado")
+
+    } catch (e: Exception) {
+        System.err.println("ERROR en productor de números: ${e.message}")
+        e.printStackTrace(System.err)
+    } finally {
+        writer.close()
+    }
 }

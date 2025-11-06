@@ -1,49 +1,61 @@
-import java.io.IOException
-import java.io.PipedInputStream
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
-class Consumidor(private val pipeIn: PipedInputStream) {
+/**
+ * Proceso Consumidor
+ * Recibe datos del flujo de entrada estándar, procesa números (suma) y palabras (cuenta letras)
+ */
+fun main(args: Array<String>) {
+    val reader = BufferedReader(InputStreamReader(System.`in`))
 
-    // Método para consumir y procesar números enviados por el pipe
-    fun consumirNumeros(): Int {
-        return try {
-            val buffer = ByteArray(1024)
-            val bytesLeidos = pipeIn.read(buffer) // Lee los datos del pipe
-            if (bytesLeidos == -1){
-                println("Conexion cerrada por el productor")
-                0
-            }else {
-                val recibido = String(buffer, 0, bytesLeidos) // Convierte los bytes a String
-                val numeros = recibido.split(",").mapNotNull { it.trim().toIntOrNull() }
-                val suma = numeros.sum() // Suma los números recibidos
-                println("Consumidor recibio numeros: $recibido")
-                println("Suma de números: $suma")
-                return suma
+    var sumaNumeros = 0
+    var contadorNumeros = 0
+    var totalLetras = 0
+    var contadorPalabras = 0
+
+    try {
+        println("CONSUMIDOR: Esperando datos...")
+
+        var line: String?
+        while (reader.readLine().also { line = it } != null) {
+            val dato = line!!.trim()
+
+            if (dato == "FIN") {
+                println("CONSUMIDOR: Señal de fin recibida")
+                break
             }
-        } catch (e : IOException){
-            println("Error en la lectura de numeros: ${e.message}")
-            0
-        }
-    }
 
-    //Método para consumir y procesar texto enviado por el pipe
-    fun consumirTexto(): Int {
-        return  try {
-            val buffer = ByteArray(1024)
-            val bytesLeidos = pipeIn.read(buffer) // Lee los datos del pipe
-            if (bytesLeidos == -1){
-                println("Conexion cerrada por el productor")
-                0
-            }else{
-                val recibido = String(buffer, 0, bytesLeidos) // Convierte los bytes a String
-                val palabraCount = recibido.trim().split("\\s+".toRegex()).size // Cuenta palabras
-                println("Consumidor recibio texto: $recibido")
-                println("Cantidad de palabras: $palabraCount")
-                return palabraCount
+            if (dato.isEmpty()) continue
 
+            // Intentar procesar como número
+            val numero = dato.toIntOrNull()
+            if (numero != null) {
+                sumaNumeros += numero
+                contadorNumeros++
+                println("CONSUMIDOR: Recibido número $numero | Suma acumulada: $sumaNumeros")
+            } else {
+                // Procesar como palabra
+                val letras = dato.length
+                totalLetras += letras
+                contadorPalabras++
+                println("CONSUMIDOR: Recibida palabra '$dato' ($letras letras) | Total letras: $totalLetras")
             }
-        } catch (e: IOException) {
-            println("Error en la lectura de texto: ${e.message}")
-            0
         }
+
+        // Mostrar resultados finales
+        println("\n" + "=".repeat(50))
+        println("RESUMEN FINAL DEL CONSUMIDOR")
+        println("=".repeat(50))
+        println("Números procesados: $contadorNumeros")
+        println("Suma total de números: $sumaNumeros")
+        println("Palabras procesadas: $contadorPalabras")
+        println("Total de letras: $totalLetras")
+        println("=".repeat(50))
+
+    } catch (e: Exception) {
+        System.err.println("ERROR en consumidor: ${e.message}")
+        e.printStackTrace(System.err)
+    } finally {
+        reader.close()
     }
 }
