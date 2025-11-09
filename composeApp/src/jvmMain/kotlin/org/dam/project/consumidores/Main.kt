@@ -193,9 +193,9 @@ fun main() {
         println("Proceso consumidor finalizado con codigo: $consumerExitCode")
 
         if (producerExitCode == 0 && consumerExitCode == 0) {
-            println("✓ Comunicación completada exitosamente")
+            println(" Comunicacion completada exitosamente")
         } else {
-            println("✗ Hubo errores durante la comunicación")
+            println(" Hubo errores durante la comunicación")
         }
 
     } catch (e: Exception) {

@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
             if (numero != null) {
                 sumaNumeros += numero
                 contadorNumeros++
-                println("CONSUMIDOR: Recibido número $numero | Suma acumulada: $sumaNumeros")
+                println("CONSUMIDOR: Recibido numero $numero | Suma acumulada: $sumaNumeros")
             } else {
                 // Procesar como palabra
                 val letras = dato.length
@@ -48,8 +48,8 @@ fun main(args: Array<String>) {
         println("\n" + "=".repeat(50))
         println("RESUMEN FINAL DEL CONSUMIDOR")
         println("=".repeat(50))
-        println("Números procesados: $contadorNumeros")
-        println("Suma total de números: $sumaNumeros")
+        println("Numeros procesados: $contadorNumeros")
+        println("Suma total de numeros: $sumaNumeros")
         println("Palabras procesadas: $contadorPalabras")
         println("Total de letras: $totalLetras")
         println("=".repeat(50))
