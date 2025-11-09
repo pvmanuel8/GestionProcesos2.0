@@ -9,7 +9,7 @@ plugins {
 
 kotlin {
     jvm()
-    
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -34,7 +34,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "org.dam.project.MainKt"
+        mainClass = "org.dam.project.ui.IPCAppKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
@@ -44,3 +44,69 @@ compose.desktop {
     }
 }
 
+// Tarea para crear JAR del productor de números
+tasks.register<Jar>("createProdNumJar") {
+    group = "ipc"
+    archiveFileName.set("ProdNum.jar")
+    destinationDirectory.set(file("src/jvmMain/kotlin/org/dam/project/ejecutables"))
+
+    val jvmMain = kotlin.jvm().compilations.getByName("main")
+    from(jvmMain.output)
+
+    manifest {
+        attributes["Main-Class"] = "org.dam.project.ProdNumKt"
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    // Incluir dependencias de runtime de JVM
+    from({
+        jvmMain.runtimeDependencyFiles.map { if (it.isDirectory) it else zipTree(it) }
+    })
+}
+
+// Tarea para crear JAR del productor de texto
+tasks.register<Jar>("createProdTxtJar") {
+    group = "ipc"
+    archiveFileName.set("ProdTxt.jar")
+    destinationDirectory.set(file("src/jvmMain/kotlin/org/dam/project/ejecutables"))
+
+    val jvmMain = kotlin.jvm().compilations.getByName("main")
+    from(jvmMain.output)
+
+    manifest {
+        attributes["Main-Class"] = "org.dam.project.ProdTxtKt"
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from({
+        jvmMain.runtimeDependencyFiles.map { if (it.isDirectory) it else zipTree(it) }
+    })
+}
+
+// Tarea para crear JAR del consumidor
+tasks.register<Jar>("createConsumidorJar") {
+    group = "ipc"
+    archiveFileName.set("Consumidor.jar")
+    destinationDirectory.set(file("src/jvmMain/kotlin/org/dam/project/ejecutables"))
+
+    val jvmMain = kotlin.jvm().compilations.getByName("main")
+    from(jvmMain.output)
+
+    manifest {
+        attributes["Main-Class"] = "org.dam.project.ConsumidorKt"
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from({
+        jvmMain.runtimeDependencyFiles.map { if (it.isDirectory) it else zipTree(it) }
+    })
+}
+
+// Tarea para crear todos los JARs de una vez
+tasks.register("createAllJars") {
+    group = "ipc"
+    dependsOn("createProdNumJar", "createProdTxtJar", "createConsumidorJar")
+}
