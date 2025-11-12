@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
             val dato = line!!.trim()
 
             if (dato == "FIN") {
-                println("CONSUMIDOR: Señal de fin recibida")
+                println("CONSUMIDOR: Senhal de fin recibida")
                 break
             }
 
