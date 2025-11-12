@@ -49,7 +49,7 @@ data class ProcessState(
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "Sistema de Comunicación entre Procesos (IPC)",
+        title = "Sistema de Comunicacion entre Procesos (IPC)",
         state = rememberWindowState(width = 900.dp, height = 700.dp)
     ) {
         IPCApp()
@@ -66,7 +66,7 @@ fun IPCApp() {
     val coroutineScope = rememberCoroutineScope()
 
     val processes = listOf(
-        ProcessOption(1, "Generador de números aleatorios", "org.dam.project.ProdNumKt"),
+        ProcessOption(1, "Generador de numeros aleatorios", "org.dam.project.ProdNumKt"),
         ProcessOption(2, "Generador de texto aleatorio", "org.dam.project.ProdTxtKt")
     )
 
@@ -89,7 +89,7 @@ fun IPCApp() {
             ) {
                 // Título
                 Text(
-                    text = "SISTEMA DE COMUNICACIÓN ENTRE PROCESOS (IPC)",
+                    text = "SISTEMA DE COMUNICACION ENTRE PROCESOS (IPC)",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = TextPrimary,
@@ -124,37 +124,7 @@ fun IPCApp() {
                     }
                 }
 
-                // Parámetros de entrada
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    backgroundColor = CardBackground,
-                    shape = RoundedCornerShape(12.dp),
-                    elevation = 4.dp
-                ) {
-                    Column(
-                        modifier = Modifier.padding(20.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Text(
-                            text = "Parámetros de entrada (opcional):",
-                            fontSize = 16.sp,
-                            color = TextPrimary
-                        )
 
-                        OutlinedTextField(
-                            value = inputParams,
-                            onValueChange = { inputParams = it },
-                            placeholder = { Text("Ejemplo: cantidad de datos, texto base, etc.", color = TextSecondary) },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
-                                textColor = TextPrimary,
-                                cursorColor = AccentTeal,
-                                focusedBorderColor = AccentTeal,
-                                unfocusedBorderColor = TextSecondary
-                            )
-                        )
-                    }
-                }
 
                 // Botones de control
                 Row(
@@ -163,9 +133,9 @@ fun IPCApp() {
                 ) {
                     Button(
                         onClick = {
-                            println("DEBUG: Botón presionado")
+                            println("DEBUG: Boton presionado")
                             println("DEBUG: Proceso seleccionado: $selectedProcess")
-                            println("DEBUG: Parámetros: ${inputParams.ifEmpty { "10" }}")
+                            println("DEBUG: Parametros: ${inputParams.ifEmpty { "10" }}")
 
                             coroutineScope.launch {
                                 try {
@@ -305,7 +275,7 @@ fun IPCApp() {
                                 .verticalScroll(scrollState)
                         ) {
                             Text(
-                                text = processState.outputData.ifEmpty { "Sin datos aún..." },
+                                text = processState.outputData.ifEmpty { "Sin datos aun..." },
                                 fontSize = 14.sp,
                                 color = TextPrimary,
                                 lineHeight = 20.sp
@@ -349,7 +319,7 @@ suspend fun executeProcess(
 ): Pair<Process?, Process?> = withContext(Dispatchers.IO) {
     println("DEBUG: Iniciando executeProcess")
     println("DEBUG: Proceso ID: ${process.id}")
-    println("DEBUG: Parámetros: $params")
+    println("DEBUG: Parametros: $params")
 
     val startTime = System.currentTimeMillis()
 
@@ -358,7 +328,7 @@ suspend fun executeProcess(
             isRunning = true,
             progress = 0.1f,
             statusText = "Iniciando procesos...",
-            outputData = "Iniciando comunicación IPC...\n"
+            outputData = "Iniciando comunicacion IPC...\n"
         ))
     }
 
@@ -378,7 +348,7 @@ suspend fun executeProcess(
                     statusText = "Error: No existe carpeta de ejecutables",
                     outputData = "ERROR: No existe el directorio de ejecutables\n" +
                             "Buscado en: ${baseDir.absolutePath}\n\n" +
-                            "Asegúrate de tener los JARs compilados."
+                            "Asegurate de tener los JARs compilados."
                 ))
             }
             return@withContext Pair(null, null)
@@ -404,7 +374,7 @@ suspend fun executeProcess(
                 onStateChange(currentState.copy(
                     isRunning = false,
                     statusText = "Error: JAR productor no encontrado",
-                    outputData = "ERROR: No se encontró ${nombreJarProductor}\n" +
+                    outputData = "ERROR: No se encontro ${nombreJarProductor}\n" +
                             "Buscado en: ${jarProductor.absolutePath}\n\n" +
                             "Compila los JARs ejecutables primero."
                 ))
@@ -417,7 +387,7 @@ suspend fun executeProcess(
                 onStateChange(currentState.copy(
                     isRunning = false,
                     statusText = "Error: JAR consumidor no encontrado",
-                    outputData = "ERROR: No se encontró Consumidor.jar\n" +
+                    outputData = "ERROR: No se encontro Consumidor.jar\n" +
                             "Buscado en: ${jarConsumidor.absolutePath}\n\n" +
                             "Compila los JARs ejecutables primero."
                 ))
@@ -466,7 +436,7 @@ suspend fun executeProcess(
                 isRunning = true,
                 progress = 0.4f,
                 statusText = "Conectando procesos mediante pipe...",
-                outputData = "Consumidor iniciado\nEstableciendo comunicación via Pipe...\n"
+                outputData = "Consumidor iniciado\nEstableciendo comunicacion via Pipe...\n"
             ))
         }
 
@@ -489,14 +459,14 @@ suspend fun executeProcess(
             onStateChange(currentState.copy(
                 isRunning = true,
                 progress = 0.5f,
-                statusText = "Comunicación establecida. Procesando datos...",
-                outputData = "Comunicación establecida via Pipe\n\n--- Salida del Consumidor ---\n"
+                statusText = "Comunicacion establecida. Procesando datos...",
+                outputData = "Comunicacion establecida via Pipe\n\n--- Salida del Consumidor ---\n"
             ))
         }
 
         // Leer salida del consumidor
         val outputBuilder = StringBuilder()
-        outputBuilder.append("Comunicación establecida via Pipe\n\n--- Salida del Consumidor ---\n")
+        outputBuilder.append("Comunicacion establecida via Pipe\n\n--- Salida del Consumidor ---\n")
 
         val reader = BufferedReader(InputStreamReader(consumerProcess.inputStream))
 
@@ -518,7 +488,7 @@ suspend fun executeProcess(
                     progress = progress,
                     outputData = outputBuilder.toString(),
                     executionTime = elapsed,
-                    statusText = "Procesando datos... ($lineCount líneas recibidas)"
+                    statusText = "Procesando datos... ($lineCount lineas recibidas)"
                 ))
             }
         }
@@ -529,16 +499,16 @@ suspend fun executeProcess(
         val producerExit = producerProcess.waitFor()
         val consumerExit = consumerProcess.waitFor()
 
-        println("DEBUG: Productor terminó con código: $producerExit")
-        println("DEBUG: Consumidor terminó con código: $consumerExit")
+        println("DEBUG: Productor termino con codigo: $producerExit")
+        println("DEBUG: Consumidor termino con codigo: $consumerExit")
 
         val totalTime = (System.currentTimeMillis() - startTime) / 1000f
 
         outputBuilder.append("\n--- Proceso Completado ---\n")
-        outputBuilder.append("Tiempo de ejecución: ${String.format("%.2f", totalTime)}s\n")
-        outputBuilder.append("Código de salida productor: $producerExit\n")
-        outputBuilder.append("Código de salida consumidor: $consumerExit\n")
-        outputBuilder.append("Comunicación: Establecida via Pipe\n")
+        outputBuilder.append("Tiempo de ejecucion: ${String.format("%.2f", totalTime)}s\n")
+        outputBuilder.append("Codigo de salida productor: $producerExit\n")
+        outputBuilder.append("Codigo de salida consumidor: $consumerExit\n")
+        outputBuilder.append("Comunicacion: Establecida via Pipe\n")
 
         withContext(Dispatchers.Main) {
             onStateChange(currentState.copy(
@@ -549,7 +519,7 @@ suspend fun executeProcess(
                 statusText = if (producerExit == 0 && consumerExit == 0)
                     "✓ Proceso completado exitosamente"
                 else
-                    "✗ Proceso terminó con errores"
+                    "✗ Proceso termino con errores"
             ))
         }
 
