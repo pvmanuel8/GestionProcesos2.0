@@ -124,6 +124,37 @@ fun IPCApp() {
                     }
                 }
 
+                // Parámetros de entrada
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    backgroundColor = CardBackground,
+                    shape = RoundedCornerShape(12.dp),
+                    elevation = 4.dp
+                ) {
+                    Column(
+                        modifier = Modifier.padding(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            text = "Parametros de entrada (opcional):",
+                            fontSize = 16.sp,
+                            color = TextPrimary
+                        )
+
+                        OutlinedTextField(
+                            value = inputParams,
+                            onValueChange = { inputParams = it },
+                            placeholder = { Text("Ejemplo: cantidad de datos, texto base, etc.", color = TextSecondary) },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                textColor = TextPrimary,
+                                cursorColor = AccentTeal,
+                                focusedBorderColor = AccentTeal,
+                                unfocusedBorderColor = TextSecondary
+                            )
+                        )
+                    }
+                }
 
 
                 // Botones de control

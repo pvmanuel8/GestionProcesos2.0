@@ -46,9 +46,6 @@ Proceso 1 → Parámetros: 20 → Iniciar
 Proceso 2 → Parámetros: 50 → Iniciar
 ```
 
-#### 3. Procesar una imagen
-```
-Proceso 3 → Parámetros: C:\ruta\imagen.jpg → Iniciar
 ```
 
 ---
@@ -160,14 +157,12 @@ Este proyecto fue desarrollado como parte del módulo de **Programación de Serv
 
 - **🔢 Generador de Números Aleatorios**: Genera números entre 1-100
 - **📝 Generador de Texto**: Produce palabras aleatorias de un diccionario
-- **🖼️ Procesador de Imágenes**: Procesa archivos de imagen (JPG, PNG, BMP)
 
 ### Proceso Consumidor Universal
 
 - **Detección automática** del tipo de dato recibido
 - **Suma acumulativa** de números
 - **Conteo de letras** en palabras
-- **Procesamiento de imágenes** con guardado automático
 - **Estadísticas en tiempo real**
 
 ### Interfaz Gráfica
@@ -185,7 +180,7 @@ Este proyecto fue desarrollado como parte del módulo de **Programación de Serv
 
 
 ```
-1️⃣ ELIGE  → 3️⃣ EJECUTA
+1️⃣ ELIGE → 2️⃣ CONFIGURA → 3️⃣ EJECUTA
 ```
 
 ### Paso 1: Elegir un Proceso
@@ -199,15 +194,23 @@ Cuando abras la aplicación verás **3 botones grandes**:
 ┌──────────────────────────────────────┐
 │  Proceso 2: Texto aleatorio          │
 └──────────────────────────────────────┘
-┌──────────────────────────────────────┐
-│  Proceso 3: Procesador de imágenes   │
-└──────────────────────────────────────┘
 ```
 
 **Haz click en UNO** de ellos. Se pondrá de color **azul turquesa** 🟦
 
-```
+### Paso 2: Configurar (Opcional)
 
+Hay una caja de texto donde puedes escribir:
+
+- **Para Proceso 1 o 2:** Un número (ej: `10` = genera 10 elementos)
+
+- **Dejarlo vacío:** Usa configuración por defecto ✅
+
+```
+┌─────────────────────────────────────────────┐
+│ 10                                          │ ← Escribe aquí (opcional)
+└─────────────────────────────────────────────┘
+```
 ### Paso 3: Iniciar
 
 Haz click en el botón verde **"Iniciar proceso"**
