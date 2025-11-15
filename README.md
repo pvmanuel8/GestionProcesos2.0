@@ -31,7 +31,7 @@
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/TU_USUARIO/GestionProcesos.git
+git clone https://github.com/pvmanuel8/GestionProcesos2.0.git
 cd GestionProcesos
 
 ### Uso de la Interfaz
